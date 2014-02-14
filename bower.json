@@ -17,10 +17,17 @@
     "musikata.deck": "git://github.com/musikata/musikata.deck",
     "musikata.feelTheBeat": "git://github.com/musikata/musikata.feelTheBeat",
     "musikata.audioManager": "git://github.com/musikata/musikata.audioManager",
-    "musikata.theme": "git://github.com/musikata/musikata.theme"
+    "musikata.theme": "git://github.com/musikata/musikata.theme",
+    "almond": "~0.2.9",
+    "backbone.wreqr": "~1.0.0",
+    "backbone.babysitter": "~0.1.0",
+    "underscore": "~1.6.0",
+    "marionette": "~1.6.2"
   },
   "resolutions": {
     "backbone": "~1.1.0",
-    "jquery": ">= 2.0.0"
+    "underscore": "~1.6.0",
+    "backbone.wreqr": "~1.0.0",
+    "backbone.babysitter": "~0.1.0"
   }
 }

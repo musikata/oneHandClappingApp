@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Musikata::The Sound of One Hand Clapping</title>
+<link rel="stylesheet" href="css/app.css" />
+
+<style type="text/css">
+
+.intro-slide {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-slide > * {
+    flex: 1 1 auto;
+}
+
+</style>
+
+
+<head>
+
+<body>
+<div id="body-container">
+
+    <nav id="topBar" class="top-bar">
+        <ul class="title-area">
+            <li class="name">
+            <h1>
+                <a href="#">
+                    <img id="logo">
+                </a>
+            </h1>
+            </li>
+        </ul>
+    </nav>
+    <div id="main">
+        <div id="content" class="app musikata-exercise-deck-runner exercise-deck-runner feel-the-beat-app">
+            <div class="app-header"></div>
+            <div class="app-body">
+                Loading...
+            </div>
+            <div class="app-footer"></div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <div id="introSlide-1">
+            <div class="intro-slide">
+                <h3>The Sound of One Hand Clapping</h3>
+                <p>The goal of this kata is to help you feel the beat.</p>
+                <div class="sensei-image"></div>
+                <p>Ready? Let's go!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+var appConfig = {
+introSlides: [
+             {type: 'selector', selector: '#introSlide-1'},
+             ],
+             exerciseSlides: [
+             {type: 'feelTheBeat', bpm: 90, length: 4, threshold: .4, maxFailedBeats: 1},
+             {type: 'feelTheBeat', bpm: 60, length: 4, threshold: .2, maxFailedBeats: 2},
+             {type: 'feelTheBeat', bpm: 120, length: 8, threshold: .3, maxFailedBeats: 4},
+             {type: 'feelTheBeat', bpm: 90, length: 6, threshold: .1, maxFailedBeats: 0}
+             ],
+                 destination: 'http://musikata.com'
+};
+    </script>
+
+    <script src="main.js"></script>
+
+</div>
+<body>
+<html>
