@@ -1,0 +1,26 @@
+{
+  "name": "musikata.oneHandClapping",
+  "version": "0.0.0",
+  "authors": [
+    "adorsk"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "musikata.deck": "git://github.com/musikata/musikata.deck",
+    "musikata.feelTheBeat": "git://github.com/musikata/musikata.feelTheBeat",
+    "musikata.audioManager": "git://github.com/musikata/musikata.audioManager",
+    "musikata.theme": "git://github.com/musikata/musikata.theme"
+  },
+  "resolutions": {
+    "backbone": "~1.1.0",
+    "jquery": ">= 2.0.0"
+  }
+}
