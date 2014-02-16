@@ -21,9 +21,41 @@
  * - copying assets
  */
 
+var _ = require('underscore');
+
 module.exports = function(grunt){
 
   grunt.file.mkdir('build/js');
+
+  var commonRequireConfig = {
+    findNestedDependencies: true,
+    generateSourceMaps: true,
+    preserveLicenseComments: false,
+    optimize: "none",
+    paths: {
+      almond: 'bower_components' + '/almond/almond',
+      text: 'bower_components' + '/requirejs-text/text',
+      jquery: 'bower_components' + '/jquery/dist/jquery',
+      backbone: 'bower_components' + '/backbone/backbone',
+      underscore: 'bower_components' + '/underscore/underscore',
+      marionette: 'bower_components' + '/marionette/lib/core/amd/backbone.marionette',
+      'backbone.wreqr': 'bower_components' + '/backbone.wreqr/lib/amd/backbone.wreqr',
+      'backbone.babysitter': 'bower_components' + '/backbone.babysitter/lib/amd/backbone.babysitter',
+      handlebars: 'bower_components' + '/handlebars/handlebars',
+    },
+    packages: [
+      {name: 'app', location: 'src'},
+      {name: 'deck', location: 'bower_components' + '/musikata.deck/src'},
+      {name: 'feelTheBeat', location: 'bower_components' + '/musikata.feelTheBeat/src'},
+      {name: 'audioManager', location: 'bower_components' + '/musikata.audioManager/src'},
+    ],
+
+    shim: {
+      'handlebars': {
+        exports: 'Handlebars'
+      },
+    },
+  };
 
   grunt.initConfig({
 
@@ -73,39 +105,20 @@ module.exports = function(grunt){
 
     requirejs: {
       app: {
-        options: {
+        options: _.extend({}, commonRequireConfig, {
           out: 'build/js/app.js',
           name: 'almond',
           include: ['app/feelTheBeat_main'],
           insertRequire: ['app/feelTheBeat_main'],
-          findNestedDependencies: true,
-          generateSourceMaps: true,
-          preserveLicenseComments: false,
-          optimize: "none",
-          paths: {
-            almond: 'bower_components' + '/almond/almond',
-            text: 'bower_components' + '/requirejs-text/text',
-            jquery: 'bower_components' + '/jquery/dist/jquery',
-            backbone: 'bower_components' + '/backbone/backbone',
-            underscore: 'bower_components' + '/underscore/underscore',
-            marionette: 'bower_components' + '/marionette/lib/core/amd/backbone.marionette',
-            'backbone.wreqr': 'bower_components' + '/backbone.wreqr/lib/amd/backbone.wreqr',
-            'backbone.babysitter': 'bower_components' + '/backbone.babysitter/lib/amd/backbone.babysitter',
-            handlebars: 'bower_components' + '/handlebars/handlebars',
-          },
-          packages: [
-            {name: 'app', location: 'src'},
-            {name: 'deck', location: 'bower_components' + '/musikata.deck/src'},
-            {name: 'feelTheBeat', location: 'bower_components' + '/musikata.feelTheBeat/src'},
-            {name: 'audioManager', location: 'bower_components' + '/musikata.audioManager/src'},
-          ],
-
-          shim: {
-            'handlebars': {
-              exports: 'Handlebars'
-            },
-          }
-        }
+        })
+      },
+      unsupported: {
+        options: _.extend({}, commonRequireConfig, {
+          out: 'build/js/unsupported.js',
+          name: 'almond',
+          include: ['app/unsupported_main'],
+          insertRequire: ['app/unsupported_main'],
+        })
       }
     }
 
@@ -117,6 +130,7 @@ module.exports = function(grunt){
 
   grunt.registerTask('build', [
     'sass',
-    'copy'
+    'copy',
+    'requirejs'
   ]);
 }
