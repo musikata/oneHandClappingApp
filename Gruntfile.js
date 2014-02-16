@@ -69,7 +69,32 @@ module.exports = function(grunt){
           style: 'compressed'
         },
         files: {
-          'build/css/app.css': 'bower_components/musikata.theme/scss/app.scss'
+          'build/tmp/app.css': 'bower_components/musikata.theme/scss/app.scss'
+        }
+      }
+    },
+
+    concat: {
+      css: {
+        src: [
+          'build/tmp/app.css',
+          'src/local.css'
+        ],
+        dest: 'build/css/app.css',
+      }
+    },
+
+    autoprefixer: {
+      compiledTheme: {
+        src: 'build/css/app.css',
+        dest: 'build/css/app.css'
+      }
+    },
+
+    cssmin: {
+      theme: {
+        files: {
+          'build/css/app.css': ['build/css/app.css']
         }
       }
     },
@@ -109,7 +134,7 @@ module.exports = function(grunt){
         files: {
           'build/js/modernizr.min.js': ['bower_components/modernizr/modernizr.js']
         }
-      }
+      },
     },
 
     requirejs: {
@@ -132,18 +157,37 @@ module.exports = function(grunt){
           insertRequire: ['app/unsupported_main'],
         })
       }
+    },
+
+    clean: {
+      tmp: ['build/tmp']
     }
 
   });
 
+  grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+
+  grunt.registerTask('buildTheme', [
+    'sass',
+    'concat',
+    'autoprefixer',
+    'copy:theme',
+  ]);
 
   grunt.registerTask('build', [
-    'sass',
-    'copy',
-    'requirejs'
+    'buildTheme',
+    'copy:samples',
+    'copy:index',
+    'requirejs',
+    'uglify',
+    'cssmin',
+    'clean:tmp'
   ]);
 }

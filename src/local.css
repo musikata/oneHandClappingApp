@@ -1,0 +1,12 @@
+.intro-slide {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-slide > * {
+  flex: 1 1 auto;
+}
+
