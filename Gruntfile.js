@@ -21,7 +21,7 @@
  * - copying assets
  */
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 module.exports = function(grunt){
 
@@ -100,12 +100,21 @@ module.exports = function(grunt){
         ],
         expand: true,
         dest: 'build/'
+      },
+
+    },
+
+    uglify: {
+      modernizr: {
+        files: {
+          'build/js/modernizr.min.js': ['bower_components/modernizr/modernizr.js']
+        }
       }
     },
 
     requirejs: {
       app: {
-        options: _.extend({}, commonRequireConfig, {
+        options: _.merge({}, commonRequireConfig, {
           out: 'build/js/app.js',
           name: 'almond',
           include: ['app/feelTheBeat_main'],
@@ -113,7 +122,10 @@ module.exports = function(grunt){
         })
       },
       unsupported: {
-        options: _.extend({}, commonRequireConfig, {
+        options: _.merge({}, commonRequireConfig, {
+          paths: {
+            jquery: 'bower_components' + '/jquery-1.9.1/index',
+          },
           out: 'build/js/unsupported.js',
           name: 'almond',
           include: ['app/unsupported_main'],
@@ -127,6 +139,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('build', [
     'sass',

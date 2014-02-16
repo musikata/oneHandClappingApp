@@ -1,11 +1,12 @@
 (function () {
   // Feature test some stuff
   var features = {
-    webAudio: window.AudioContext || window.webkitAudioContext
+    webAudio: window.AudioContext || window.webkitAudioContext,
+    flexbox: Modernizr.flexbox
   };
 
   // If web audio support, load app.
-  var mainScript = (features.webAudio) ? 'app.js' : 'unsupported.js';
+  var mainScript = (features.webAudio && features.flexbox) ? 'app.js' : 'unsupported.js';
 
   // The async script injection fanfare
   var script = document.createElement('script');
