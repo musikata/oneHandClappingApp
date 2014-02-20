@@ -18,7 +18,7 @@ define(function(require){
       collection: new Backbone.Collection([
         new Backbone.Model({
         eventId: 'feedback',
-        label: 'give feedback'
+        label: 'leave feedback'
       }),
       new Backbone.Model({
         eventId: 'home',
