@@ -9,7 +9,8 @@ var appConfig = {
     {type: 'feelTheBeat', bpm: 90, length: 6, threshold: .1, maxFailedBeats: 0}
   ],
   goToFeedback: function(){
-    window.open('https://docs.google.com/a/musikata.com/forms/d/1tpVhCC6WDwYvE-HdOhrDCM4wetivLsJcwg8p3OxeJCo/viewform');
+    var feedbackUrl = window.location.href.replace(new RegExp('(.*)\/(.*)'), "$1/feedback.html");
+    window.open(feedbackUrl);
   },
   goToHome: function(){
     window.location.href = 'http://musikata.com';

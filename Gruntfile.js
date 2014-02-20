@@ -121,6 +121,7 @@ module.exports = function(grunt){
         cwd: 'src',
         src: [
           'index.html', 
+          'feedback.html', 
           'main.js'
         ],
         expand: true,

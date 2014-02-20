@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Musikata::Feedback</title>
+<link rel="stylesheet" href="css/app.css" />
+
+<script src="js/modernizr.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<head>
+
+<body>
+<div id="body-container">
+
+    <nav id="topBar" class="top-bar">
+        <ul class="title-area">
+            <li class="name">
+            <h1>
+                <a href="#">
+                    <img id="logo">
+                </a>
+            </h1>
+            </li>
+        </ul>
+    </nav>
+    <div id="main">
+        <div id="content" class="app musikata-exercise-deck-runner exercise-deck-runner feel-the-beat-app">
+            <div class="app-header"></div>
+            <div class="app-body">
+                <iframe id="_frame" style="display: none;"></iframe>
+                <form 
+                    action="https://docs.google.com/a/musikata.com/forms/d/1tpVhCC6WDwYvE-HdOhrDCM4wetivLsJcwg8p3OxeJCo/formResponse"
+                    target="_frame"
+                    method="POST"
+                    id="feedbackForm"
+                    >
+
+                    <div class="form-element">
+                        <label for="feedback">Feedback</label>
+                        <textarea id="feedback" name="entry.367348674" rows="8" cols="0" class="" ></textarea>
+                    </div>
+
+                    <div id="email-element" class="form-element">
+                        <label for="email">Email (optional)</label>
+                        <input id="email" type="email" size="30" name="entry.2017700854">
+                    </div>
+
+                    <div id="submit-element" class="form-element">
+                        <input type="submit" value="send feedback" class="button button_primary">
+                    </div>
+                </form>
+
+                <div id="result" class="form-result success" style="display:none;">
+                    <h3>Domo arigato!</h3>
+                    <p>Thank you, your feedback has been received.</p>
+                    <p>We appreciate this, it will help improve Musikata</p>
+                    <a class="button" href="http://musikata.com">return home</a>
+                </div>
+            </div>
+            <div class="app-footer"></div>
+        </div>
+    </div>
+
+    <script>
+$(document).ready(function(){
+    var $feedbackForm = $('#feedbackForm');
+    var $result = $('#result');
+    $feedbackForm.on('submit', function(){
+        $feedbackForm.fadeOut(function(){
+            $result.fadeIn();
+        });
+    });
+
+    var $emailEl = $('#email-element');
+    var $emailInput = $emailEl.find('input');
+    var $emailLabel = $emailEl.find('label');
+
+    $emailInput.on('keydown', function(){
+        $emailLabel.hide();
+    });
+    $emailInput.on('keyup', function(){
+        if (! $emailInput.val().length){
+            $emailLabel.fadeIn();
+        }
+    });
+});
+
+    </script>
+
+</div>
+<body>
+<html>
