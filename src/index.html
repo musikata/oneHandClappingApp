@@ -39,6 +39,13 @@
     <div style="display:none;">
         <div id="introSlide-1">
             <div class="intro-slide">
+                <h3>Try it out!</h3>
+                <p>This is an early test version of an exercise we're developing.</p>
+                <p>Thanks for trying it out, we hope you enjoy it.</p>
+            </div>
+        </div>
+        <div id="introSlide-2">
+            <div class="intro-slide">
                 <h3>The Sound of One Hand Clapping</h3>
                 <p>The goal of this kata is to help you feel the beat.</p>
                 <div class="sensei-image"></div>
@@ -47,7 +54,48 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script>
+
+var appConfig = {
+  introSlides: [
+    {type: 'selector', selector: '#introSlide-1'},
+    {type: 'selector', selector: '#introSlide-2'}
+  ],
+  exerciseSlides: [
+    {type: 'feelTheBeat', bpm: 90, length: 4, threshold: .4, maxFailedBeats: 1},
+    {type: 'feelTheBeat', bpm: 60, length: 4, threshold: .2, maxFailedBeats: 2},
+    {type: 'feelTheBeat', bpm: 120, length: 8, threshold: .3, maxFailedBeats: 4},
+    {type: 'feelTheBeat', bpm: 90, length: 6, threshold: .1, maxFailedBeats: 0}
+  ],
+  goToFeedback: function(){
+    var feedbackUrl = window.location.href.replace(new RegExp('(.*)\/(.*)'), "$1/feedback.html");
+    window.open(feedbackUrl);
+  },
+  goToHome: function(){
+    window.location.href = 'http://musikata.com';
+  }
+};
+
+// Feature test some stuff
+var features = {
+  webAudio: window.AudioContext || window.webkitAudioContext,
+  flexbox: Modernizr.flexbox || Modernizr.flexboxlegacy
+};
+
+// If web audio support, load app.
+var mainScript = (features.webAudio && features.flexbox) ? 'app.js' : 'unsupported.js';
+
+// The async script injection fanfare
+var script = document.createElement('script');
+var fScript = document.getElementsByTagName('script')[0];
+
+// Set the URL on the script
+script.src = 'js/' + mainScript;
+
+// Inject the script
+fScript.parentNode.insertBefore(script, fScript);
+</script>
+
 
 </div>
 <body>

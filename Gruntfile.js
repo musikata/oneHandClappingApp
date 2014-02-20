@@ -121,8 +121,7 @@ module.exports = function(grunt){
         cwd: 'src',
         src: [
           'index.html', 
-          'feedback.html', 
-          'main.js'
+          'feedback.html'
         ],
         expand: true,
         dest: 'build/'
