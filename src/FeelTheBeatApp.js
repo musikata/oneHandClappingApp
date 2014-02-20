@@ -105,6 +105,21 @@ define(function(require){
       model: this.runnerModel,
       viewFactory: this.viewFactory
     });
+
+    // Route navigation events.
+    this.runnerView.on('navigate', function(route){
+      if (route === 'dojo'){
+        appConfig.goToHome();
+      }
+      else if (route === 'destination' || route === 'feedback'){
+        appConfig.goToFeedback();
+      }
+      else if (route === 'tryAgain'){
+        window.location.reload();
+      }
+    });
+
+
     this.runnerView.render();
   };
 

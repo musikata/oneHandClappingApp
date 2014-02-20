@@ -5,6 +5,9 @@ define(function(require){
   var NavigationView = require('deck/NavigationView');
 
   var UnsupportedBrowserApp = function(options){
+
+    var appConfig = options.appConfig;
+
     var view = new UnsupportedBrowserView({
       className: 'unsupported-browser-view',
     }).render();
@@ -26,10 +29,10 @@ define(function(require){
     navView.render();
     navView.on('button:clicked', function(buttonView, eventId){
       if (eventId === 'feedback'){
-        options.onGoToFeedback();
+        appConfig.goToFeedback();
       }
       else if (eventId === 'home'){
-        options.onGoToHome();
+        appConfig.goToHome();
       }
     });
 
