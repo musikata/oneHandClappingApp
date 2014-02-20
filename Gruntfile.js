@@ -29,7 +29,7 @@ module.exports = function(grunt){
 
   var commonRequireConfig = {
     findNestedDependencies: true,
-    generateSourceMaps: true,
+    generateSourceMaps: false,
     preserveLicenseComments: false,
     optimize: "none",
     paths: {
@@ -91,6 +91,31 @@ module.exports = function(grunt){
       }
     },
 
+    imageEmbed: {
+      theme: {
+        src: [ "build/css/app.css" ],
+        dest: "build/css/app.css",
+        options: {
+          deleteAfterEncoding : false
+        }
+      }
+    },
+
+    imagemin: {
+      options: {
+        cache: false,
+      },
+      theme: {
+        files: [{
+          expand: true,
+          cwd: 'bower_components/musikata.theme/img/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'build/img/',
+        }],
+        pngquant: true
+      }
+    },
+
     cssmin: {
       theme: {
         files: {
@@ -103,7 +128,6 @@ module.exports = function(grunt){
       theme: {
         cwd: 'bower_components/musikata.theme',
         src: [
-          'img/**',
           'font/**'
         ],
         expand: true,
@@ -161,7 +185,17 @@ module.exports = function(grunt){
 
     clean: {
       tmp: ['build/tmp']
-    }
+    },
+
+    watch: {
+      theme: {
+        files: 'bower_components/musikata.theme/**/*.scss',
+        tasks: ['buildTheme'],
+        options: {
+          livereload: true,
+        }
+      }
+    },
 
   });
 
@@ -173,12 +207,18 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks("grunt-image-embed");
+  grunt.loadNpmTasks("grunt-contrib-imagemin");
+
 
   grunt.registerTask('buildTheme', [
     'sass',
     'concat',
+    'imagemin',
     'autoprefixer',
     'copy:theme',
+    'imageEmbed',
   ]);
 
   grunt.registerTask('build', [

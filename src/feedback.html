@@ -100,19 +100,6 @@ $(document).ready(function(){
             });
         });
     });
-
-    var $emailEl = $('#email-element');
-    var $emailInput = $emailEl.find('input');
-    var $emailLabel = $emailEl.find('label');
-
-    $emailInput.on('keydown', function(){
-        $emailLabel.hide();
-    });
-    $emailInput.on('keyup', function(){
-        if (! $emailInput.val().length){
-            $emailLabel.fadeIn();
-        }
-    });
 });
 
     </script>
