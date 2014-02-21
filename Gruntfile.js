@@ -1,19 +1,22 @@
 /* 
  * Goal of grunt build is to produce a standalone directory like this:
  * /app
- * - index.html
- * - build_xxx.js
- * - sounds/
- * -- high.mp3
- * -- ...
- * - img/
- * -- bg.png
- * -- drum.png
- * -- ...
- * - app.css
- * - font/
- * -- font.otf
- * -- ...
+ * - static/
+ *   - index.html
+ *   - js/
+ *    - build_xxx.js
+ *   - sounds/
+ *    - high.mp3
+ *   - ...
+ *   - img/
+ *    - bg.png
+ *    - drum.png
+ *   - ...
+ *   - css/
+ *    - app.css
+ *   - font/
+ *    - font.otf
+ *   - ...
  *
  * Steps to do this include:
  * - compiling CSS, copying
@@ -22,10 +25,21 @@
  */
 
 var _ = require('lodash');
+var path = require('path');
 
 module.exports = function(grunt){
 
-  grunt.file.mkdir('build/js');
+  var buildDir = 'build';
+  var outputDir = path.join(buildDir, 'app');
+  var tmpDir = path.join(buildDir, 'tmp');
+  var staticDir = path.join(outputDir, 'static');
+  var staticDirs = {root: staticDir};
+  _.each(['js', 'css', 'img', 'font', 'samples'], function(subdir){
+    staticDirs[subdir] = path.join(staticDir, subdir);
+    grunt.file.mkdir(staticDirs[subdir]);
+  });
+
+  var appCssFile = path.join(staticDirs.css, 'app.css');
 
   var commonRequireConfig = {
     findNestedDependencies: true,
@@ -68,36 +82,20 @@ module.exports = function(grunt){
           ],
           style: 'compressed'
         },
-        files: {
-          'build/tmp/app.css': 'bower_components/musikata.theme/scss/app.scss'
-        }
+        files: [{
+          src: ['bower_components/musikata.theme/scss/app.scss'],
+          dest: tmpDir + '/app.css'
+        }]
       }
     },
 
     concat: {
       css: {
         src: [
-          'build/tmp/app.css',
+          tmpDir + '/app.css',
           'src/local.css'
         ],
-        dest: 'build/css/app.css',
-      }
-    },
-
-    autoprefixer: {
-      compiledTheme: {
-        src: 'build/css/app.css',
-        dest: 'build/css/app.css'
-      }
-    },
-
-    imageEmbed: {
-      theme: {
-        src: [ "build/css/app.css" ],
-        dest: "build/css/app.css",
-        options: {
-          deleteAfterEncoding : false
-        }
+        dest: appCssFile
       }
     },
 
@@ -110,35 +108,52 @@ module.exports = function(grunt){
           expand: true,
           cwd: 'bower_components/musikata.theme/img/',
           src: ['**/*.{png,jpg,gif}'],
-          dest: 'build/img/',
+          dest: staticDirs.img,
         }],
         pngquant: true
       }
     },
 
+    autoprefixer: {
+      compiledTheme: {
+        src: appCssFile,
+        dest: appCssFile
+      }
+    },
+
+    imageEmbed: {
+      theme: {
+        src: appCssFile,
+        dest: appCssFile,
+        options: {
+          deleteAfterEncoding : false
+        }
+      }
+    },
+
     cssmin: {
       theme: {
-        files: {
-          'build/css/app.css': ['build/css/app.css']
-        }
+        files: [{
+          src: appCssFile,
+          dest: appCssFile
+        }]
       }
     },
 
     copy: {
       theme: {
-        cwd: 'bower_components/musikata.theme',
-        src: [
-          'font/**'
-        ],
+        cwd: 'bower_components/musikata.theme/font',
+        src: ['**/*'],
         expand: true,
-        dest: 'build/',
+        dest: staticDirs.font,
         flatten: false
       },
 
       samples: {
-        src: 'samples/**',
+        cwd: 'samples',
+        src: '**/*',
         expand: true,
-        dest: 'build/'
+        dest: staticDirs.samples,
       },
 
       index: {
@@ -148,23 +163,24 @@ module.exports = function(grunt){
           'feedback.html'
         ],
         expand: true,
-        dest: 'build/'
+        dest: staticDirs.root,
       },
 
     },
 
     uglify: {
       modernizr: {
-        files: {
-          'build/js/modernizr.min.js': ['bower_components/modernizr/modernizr.js']
-        }
+        files: [{
+          src: 'bower_components/modernizr/modernizr.js',
+          dest: staticDirs.js + '/modernizr.min.js',
+        }]
       },
     },
 
     requirejs: {
       app: {
         options: _.merge({}, commonRequireConfig, {
-          out: 'build/js/app.js',
+          out: staticDirs.js + '/app.js',
           name: 'almond',
           include: ['app/feelTheBeat_main'],
           insertRequire: ['app/feelTheBeat_main'],
@@ -175,7 +191,7 @@ module.exports = function(grunt){
           paths: {
             jquery: 'bower_components' + '/jquery-1.9.1/index',
           },
-          out: 'build/js/unsupported.js',
+          out: staticDirs.js + '/unsupported.js',
           name: 'almond',
           include: ['app/unsupported_main'],
           insertRequire: ['app/unsupported_main'],
