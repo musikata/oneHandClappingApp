@@ -45,7 +45,7 @@ module.exports = function(grunt){
     findNestedDependencies: true,
     generateSourceMaps: false,
     preserveLicenseComments: false,
-    optimize: "none",
+    optimize: "uglify2",
     paths: {
       almond: 'bower_components' + '/almond/almond',
       text: 'bower_components' + '/requirejs-text/text',
@@ -200,7 +200,8 @@ module.exports = function(grunt){
     },
 
     clean: {
-      tmp: ['build/tmp']
+      all: [buildDir],
+      tmp: [tmpDir]
     },
 
     watch: {
