@@ -30,9 +30,9 @@ var path = require('path');
 module.exports = function(grunt){
 
   var buildDir = 'build';
-  var outputDir = path.join(buildDir, 'app');
-  var tmpDir = path.join(buildDir, 'tmp');
-  var staticDir = path.join(outputDir, 'static');
+  var buildTmpDir = path.join(buildDir, 'tmp');
+  var buildAppDir = path.join(buildDir, 'app');
+  var staticDir = path.join(buildAppDir, 'static');
   var staticDirs = {root: staticDir};
   _.each(['js', 'css', 'img', 'font', 'samples'], function(subdir){
     staticDirs[subdir] = path.join(staticDir, subdir);
@@ -84,7 +84,7 @@ module.exports = function(grunt){
         },
         files: [{
           src: ['bower_components/musikata.theme/scss/app.scss'],
-          dest: tmpDir + '/app.css'
+          dest: buildTmpDir + '/app.css'
         }]
       }
     },
@@ -92,7 +92,7 @@ module.exports = function(grunt){
     concat: {
       css: {
         src: [
-          tmpDir + '/app.css',
+          buildTmpDir + '/app.css',
           'src/local.css'
         ],
         dest: appCssFile
@@ -166,6 +166,13 @@ module.exports = function(grunt){
         dest: staticDirs.root,
       },
 
+      gae: {
+        cwd: 'gae',
+        expand: true,
+        src: ['app.yaml'],
+        dest: buildAppDir
+      }
+
     },
 
     uglify: {
@@ -201,7 +208,7 @@ module.exports = function(grunt){
 
     clean: {
       all: [buildDir],
-      tmp: [tmpDir]
+      tmp: [buildTmpDir]
     },
 
     watch: {
@@ -245,6 +252,8 @@ module.exports = function(grunt){
     'requirejs',
     'uglify',
     'cssmin',
+    'copy:gae',
     'clean:tmp'
   ]);
+
 }
