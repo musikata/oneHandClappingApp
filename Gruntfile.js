@@ -142,11 +142,22 @@ module.exports = function(grunt){
 
     copy: {
       theme: {
-        cwd: 'bower_components/musikata.theme/font',
-        src: ['**/*'],
-        expand: true,
-        dest: staticDirs.font,
-        flatten: false
+        files: [
+          {
+          cwd: 'bower_components/musikata.theme/font',
+          src: ['**/*'],
+          expand: true,
+          dest: staticDirs.font,
+          flatten: false
+        },
+        {
+          cwd: 'bower_components/musikata.theme/img',
+          expand: true,
+          src: ['favicon.ico'],
+          dest: staticDirs.img,
+          flatten: false
+        }
+        ]
       },
 
       samples: {
