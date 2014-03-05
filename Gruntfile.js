@@ -223,6 +223,10 @@ module.exports = function(grunt){
     },
 
     watch: {
+      index: {
+       files: 'src/index.html',
+       tasks: ['copy:index']
+      },
       theme: {
         files: 'bower_components/musikata.theme/**/*.scss',
         tasks: ['buildTheme'],
@@ -253,7 +257,7 @@ module.exports = function(grunt){
     'imagemin',
     'autoprefixer',
     'copy:theme',
-    'imageEmbed',
+    //'imageEmbed',
   ]);
 
   grunt.registerTask('build', [

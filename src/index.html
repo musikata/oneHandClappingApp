@@ -1,117 +1,115 @@
 <!doctype html>
 <html>
 
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Musikata::The Sound of One Hand Clapping</title>
-<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="css/app.css" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Musikata::The Sound of One Hand Clapping</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/app.css" />
 
-<script src="js/modernizr.min.js"></script>
+    <script src="js/modernizr.min.js"></script>
 
 
-</head>
+  </head>
 
-<body>
-<div id="body-container">
+  <body class="fit-screen">
 
     <div id="topBar" class="top-bar">
-        <ul class="title-area">
-            <li class="name">
-            <h1>
-                <a href="#">
-                    <img id="logo" src="img/logo.png">
-                </a>
-            </h1>
-            </li>
-        </ul>
+      <ul class="title-area">
+        <li class="name">
+        <h1>
+          <a href="#">
+            <img id="logo" src="img/logo.png">
+          </a>
+        </h1>
+        </li>
+      </ul>
     </div>
     <div id="main">
-        <div id="content" class="app musikata-exercise-deck-runner exercise-deck-runner feel-the-beat-app">
-            <div class="app-header"></div>
-            <div class="app-body">
-                <div style="text-align: center; margin-top: 2em;">
-                    Loading...
-                </div>
-            </div>
-            <div class="app-footer"></div>
+      <div id="content" class="app musikata-exercise-deck-runner exercise-deck-frame feel-the-beat-app">
+        <div class="header"></div>
+        <div class="body">
+          <div style="text-align: center; margin-top: 2em;">
+            Loading...
+          </div>
         </div>
+        <div class="footer"></div>
+      </div>
     </div>
 
     <div style="display:none;">
-        <div id="introSlide-1">
-            <div class="intro-slide">
-                <h3>Welcome!</h3>
-                <p>This is a test version of an exercise we're developing.</p>
-                <p>Thanks for trying it out, we hope you enjoy it.</p>
-            </div>
+      <div id="introSlide-1">
+        <div class="intro-slide">
+          <h3>Welcome!</h3>
+          <p>This is a test version of an exercise we're developing.</p>
+          <p>Thanks for trying it out, we hope you enjoy it.</p>
         </div>
-        <div id="introSlide-2">
-            <div class="intro-slide">
-                <h3>The Sound of One Hand Clapping</h3>
-                <p>The goal of this kata is to help you feel the beat.</p>
-                <div class="sensei-image"></div>
-                <p>Ready? Let's go!</p>
-            </div>
+      </div>
+      <div id="introSlide-2">
+        <div class="intro-slide">
+          <h3>The Sound of One Hand Clapping</h3>
+          <p>The goal of this kata is to help you feel the beat.</p>
+          <div class="sensei-image"></div>
+          <p>Ready? Let's go!</p>
         </div>
+      </div>
     </div>
-</div>
 
     <script>
 
-var appConfig = {
-  introSlides: [
-    {type: 'selector', selector: '#introSlide-1'},
-    {type: 'selector', selector: '#introSlide-2'}
-  ],
-  exerciseSlides: [
-    {type: 'feelTheBeat', bpm: 90, length: 4, threshold: .4, maxFailedBeats: 1},
-    {type: 'feelTheBeat', bpm: 60, length: 4, threshold: .2, maxFailedBeats: 2},
-    {type: 'feelTheBeat', bpm: 120, length: 8, threshold: .3, maxFailedBeats: 4},
-    {type: 'feelTheBeat', bpm: 90, length: 6, threshold: .1, maxFailedBeats: 0}
-  ],
-  goToFeedback: function(){
-    var feedbackUrl = window.location.href.replace(new RegExp('(.*)\/(.*)'), "$1/feedback.html");
-    window.open(feedbackUrl);
-  },
-  goToHome: function(){
-    window.location.href = 'http://musikata.com';
-  }
-};
+      var appConfig = {
+        introSlides: [
+        {type: 'selector', selector: '#introSlide-1'},
+        {type: 'selector', selector: '#introSlide-2'}
+        ],
+        exerciseSlides: [
+        {type: 'feelTheBeat', bpm: 90, length: 4, threshold: .4, maxFailedBeats: 1},
+        {type: 'feelTheBeat', bpm: 60, length: 4, threshold: .2, maxFailedBeats: 2},
+        {type: 'feelTheBeat', bpm: 120, length: 8, threshold: .3, maxFailedBeats: 4},
+        {type: 'feelTheBeat', bpm: 90, length: 6, threshold: .1, maxFailedBeats: 0}
+        ],
+        goToFeedback: function(){
+          var feedbackUrl = window.location.href.replace(new RegExp('(.*)\/(.*)'), "$1/feedback.html");
+          window.open(feedbackUrl);
+        },
+        goToHome: function(){
+          window.location.href = 'http://musikata.com';
+        }
+      };
 
-// Feature test some stuff
-var features = {
-  webAudio: window.AudioContext || window.webkitAudioContext,
-  flexbox: Modernizr.flexbox || Modernizr.flexboxlegacy
-};
+      // Feature test some stuff
+      var features = {
+        webAudio: window.AudioContext || window.webkitAudioContext,
+        flexbox: Modernizr.flexbox || Modernizr.flexboxlegacy
+      };
 
-// If web audio support, load app.
-var mainScript = (features.webAudio && features.flexbox) ? 'app.js' : 'unsupported.js';
+      // If web audio support, load app.
+      var mainScript = (features.webAudio && features.flexbox) ? 'app.js' : 'unsupported.js';
 
-// The async script injection fanfare
-var script = document.createElement('script');
-var fScript = document.getElementsByTagName('script')[0];
+      // The async script injection fanfare
+      var script = document.createElement('script');
+      var fScript = document.getElementsByTagName('script')[0];
 
-// Set the URL on the script
-script.src = 'js/' + mainScript;
+      // Set the URL on the script
+      script.src = 'js/' + mainScript;
 
-// Inject the script
-fScript.parentNode.insertBefore(script, fScript);
-</script>
+      // Inject the script
+      fScript.parentNode.insertBefore(script, fScript);
+    </script>
 
 
-<!-- Google Analytics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-48291725-1', 'musikata.com');
-  ga('send', 'pageview');
+      ga('create', 'UA-48291725-1', 'musikata.com');
+      ga('send', 'pageview');
 
-</script>
+    </script>
 
-<body>
-<html>
+    <body>
+      <html>

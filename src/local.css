@@ -6,6 +6,12 @@
   flex-direction: column;
 }
 
+.intro-slide .sensei-image {
+  height: 14.2rem;
+  background-size: auto 80%;
+  background-position: center 10%;
+}
+
 .intro-slide > * {
   flex: 1 1 auto;
 }
