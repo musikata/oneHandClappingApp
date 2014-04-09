@@ -33,15 +33,6 @@ define(function(require){
       audioContext: AudioContext
     });
 
-    // Load samples.
-    var samples = [
-      {id: 'FeelTheBeat:beat', url: 'samples/med.mp3'},
-      {id: 'FeelTheBeat:tap', url: 'samples/high.mp3'}
-    ];
-    _.each(samples, _.bind(function(sample){
-      this.audioManager.loadSample(sample);
-    }, this));
-
     // Start audio timer.
     AudioContext.createGain();
 
